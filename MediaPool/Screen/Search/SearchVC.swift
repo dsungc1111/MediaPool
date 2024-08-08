@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 final class SearchVC: BaseVC {
 
@@ -28,6 +29,7 @@ final class SearchVC: BaseVC {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "검색"
         
+        searchView.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
         bind()
     }
     
@@ -38,7 +40,16 @@ final class SearchVC: BaseVC {
         
         let output = viewModel.transform(input: input)
         
-       
+        output.searchResult
+            .bind(to: searchView.tableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
+                
+                let url = element.artworkUrl100
+                let image = URL(string: url)
+                
+                cell.thumbnail.kf.setImage(with: image)
+                cell.contentTitle.text = element.trackName
+            }
+            .disposed(by: disposeBag)
         
         
         

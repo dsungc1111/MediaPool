@@ -25,7 +25,7 @@ final class SearchViewModel {
     
     func transform(input: Input) -> Output {
         
-        var searchResult = PublishSubject<[Results]>()
+        let searchResult = PublishSubject<[Results]>()
         
         input.searchClick
             .throttle(.seconds(1), scheduler: MainScheduler.instance)

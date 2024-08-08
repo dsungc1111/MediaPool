@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class SearchView: BaseView {
     
@@ -15,10 +16,15 @@ final class SearchView: BaseView {
     
     override func configureLayout() {
         addSubview(searchBar)
+        addSubview(tableView)
         
         searchBar.snp.makeConstraints { make in
             make.top.horizontalEdges.equalTo(safeAreaLayoutGuide)
             make.height.equalTo(50)
+        }
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(searchBar.snp.bottom).offset(5)
+            make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
         }
     }
 }

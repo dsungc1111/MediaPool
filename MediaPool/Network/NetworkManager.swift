@@ -56,10 +56,7 @@ final class NetworkManager {
                 if let content = try? JSONDecoder().decode(Content.self, from: data) {
                     observer.onNext(content)
                     observer.onCompleted()
-                    
                 }
-                
-                
             }.resume()
             
             return Disposables.create()
