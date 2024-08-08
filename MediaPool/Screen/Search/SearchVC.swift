@@ -20,21 +20,28 @@ final class SearchVC: BaseVC {
         view = searchView
     }
     
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "검색"
+        
         bind()
     }
     
     
     func bind() {
-        let a = searchView.searchBar.rx.searchButtonClicked
         
-        // 옵져버블 > 컨트롤 이벤트
-//        let controlEvent = ControlEvent<Void>(events: 오1\ㅂ져버블)
+        let input = SearchViewModel.Input(searchClick:  searchView.searchBar.rx.searchButtonClicked, searchWord: searchView.searchBar.rx.text.orEmpty)
+        
+        let output = viewModel.transform(input: input)
+        
+       
+        
+        
+        
     }
 
     

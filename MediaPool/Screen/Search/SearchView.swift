@@ -11,6 +11,7 @@ final class SearchView: BaseView {
     
     let searchBar = UISearchBar()
     
+    let tableView = UITableView()
     
     override func configureLayout() {
         addSubview(searchBar)
