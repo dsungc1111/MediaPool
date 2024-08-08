@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import RxDataSources
 import RxSwift
 import RxCocoa
 import Kingfisher
@@ -16,7 +17,7 @@ final class SearchVC: BaseVC {
     private let searchView = SearchView()
     
     private let viewModel = SearchViewModel()
-    
+    var newlist: [Results] = []
     override func loadView() {
         view = searchView
     }
@@ -30,18 +31,31 @@ final class SearchVC: BaseVC {
         navigationItem.title = "검색"
         
         searchView.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
+        searchView.tableView.rowHeight = 80
         bind()
     }
     
     
     func bind() {
         
-        let input = SearchViewModel.Input(searchClick:  searchView.searchBar.rx.searchButtonClicked, searchWord: searchView.searchBar.rx.text.orEmpty)
+        let input = SearchViewModel.Input(
+            searchClick:  searchView.searchBar.rx.searchButtonClicked,
+            searchWord: searchView.searchBar.rx.text.orEmpty,
+            contentTap: searchView.tableView.rx.itemSelected)
         
         let output = viewModel.transform(input: input)
         
+        
+        
         output.searchResult
-            .bind(to: searchView.tableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
+            .bind(with: self) { owner, result in
+                owner.newlist = result
+            }
+            .disposed(by: disposeBag)
+      
+        
+        output.searchResult
+            .bind( to: searchView.tableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
                 
                 let url = element.artworkUrl100
                 let image = URL(string: url)
@@ -52,9 +66,19 @@ final class SearchVC: BaseVC {
             .disposed(by: disposeBag)
         
         
+       
+        output.contentTap
+            .bind(with: self) { owner, indexPath in
+                
+                
+                let vc = DetailVC()
+                vc.element = owner.newlist
+                
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by:  disposeBag)
         
     }
 
-    
 
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import Differentiator
 
 struct Results: Decodable {
     let trackName: String
@@ -16,6 +17,8 @@ struct Results: Decodable {
 struct Content: Decodable {
     let results: [Results]
 }
+
+
 
 
 final class NetworkManager {

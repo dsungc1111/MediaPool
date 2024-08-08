@@ -53,20 +53,19 @@ final class SearchTableViewCell: UITableViewCell {
         
         thumbnail.snp.makeConstraints { make in
             make.leading.centerY.equalTo(contentView.safeAreaLayoutGuide).inset(10)
-            make.size.equalTo(30)
+            make.size.equalTo(50)
         }
         downloadButton.snp.makeConstraints { make in
             make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(10)
-            make.verticalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(5)
+            make.verticalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(20)
             make.width.equalTo(60)
         }
         contentTitle.snp.makeConstraints { make in
             make.leading.equalTo(thumbnail.snp.trailing).offset(20)
             make.verticalEdges.equalTo(contentView.safeAreaLayoutGuide)
-            make.trailing.equalTo(downloadButton.snp.leading).offset(20)
+            make.trailing.equalTo(downloadButton.snp.leading).offset(-20)
         }
-        
-        
+                
        
         
     }

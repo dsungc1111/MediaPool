@@ -16,10 +16,12 @@ final class SearchViewModel {
     struct Input {
         let searchClick: ControlEvent<Void>
         let searchWord: ControlProperty<String>
+        let contentTap: ControlEvent<IndexPath>
     }
     
     struct Output {
         let searchResult: PublishSubject<[Results]>
+        let contentTap: ControlEvent<IndexPath>
     }
     
     
@@ -40,7 +42,9 @@ final class SearchViewModel {
             }
             .disposed(by: disposeBag)
         
-        return Output(searchResult: searchResult )
+        
+        
+        return Output(searchResult: searchResult, contentTap: input.contentTap )
         
     }
     
