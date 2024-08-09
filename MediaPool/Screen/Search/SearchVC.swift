@@ -24,6 +24,8 @@ final class SearchVC: BaseVC {
     
     private let disposeBag = DisposeBag()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -70,9 +72,8 @@ final class SearchVC: BaseVC {
         output.contentTap
             .bind(with: self) { owner, indexPath in
                 
-                
                 let vc = DetailVC()
-                vc.element = owner.newlist
+                vc.viewModel.element = owner.newlist[indexPath.row]
                 
                 owner.navigationController?.pushViewController(vc, animated: true)
             }

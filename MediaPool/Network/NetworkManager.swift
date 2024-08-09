@@ -10,8 +10,9 @@ import RxSwift
 import Differentiator
 
 struct Results: Decodable {
-    let trackName: String
-    let artworkUrl100: String
+    let trackName: String //  이름
+    let artworkUrl100: String // 앱 사진
+    let artistName: String
 }
 
 struct Content: Decodable {

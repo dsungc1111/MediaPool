@@ -7,36 +7,46 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
+import Kingfisher
 
 final class DetailVC: BaseVC {
 
+    private let detailView = DetailView()
     
-    let scrollView = UIScrollView()
-    let representativeView = UIView()
+    override func loadView() {
+        view = detailView
+    }
+ 
     
-    var element: [Results] = []
+    let viewModel = DetailViewModel()
+    
+    private let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        configureHierarchy()
-        configureLayout()
-        print(element)
+        navigationController?.navigationBar.prefersLargeTitles = false
+        bind()
     }
     
     
-    func configureHierarchy() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(representativeView)
-        representativeView.backgroundColor = .lightGray
+    func bind() {
+        
+        
+        let output = viewModel.initialSetting()
+        
+        output.detailInfo
+            .bind(with: self) { owner, result in
+                
+                let image = URL(string: result.artworkUrl100)
+                owner.detailView.appLogoView.kf.setImage(with: image)
+                owner.detailView.appTitleLabel.text = result.trackName
+                owner.detailView.nameTitle.text = result.artistName
+                
+            }
+            .disposed(by: disposeBag)
     }
-    func configureLayout() {
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-        representativeView.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalTo(scrollView.safeAreaLayoutGuide)
-        }
-    }
+ 
 
 }
