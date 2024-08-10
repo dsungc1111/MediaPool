@@ -31,6 +31,8 @@ final class SearchVC: BaseVC {
         
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "검색"
+        searchView.searchController.searchBar.placeholder = "검색어를 입력해주세요."
+        self.navigationItem.searchController = searchView.searchController
         
         searchView.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
         searchView.tableView.rowHeight = 350
@@ -41,8 +43,8 @@ final class SearchVC: BaseVC {
     func bind() {
         
         let input = SearchViewModel.Input(
-            searchClick:  searchView.searchBar.rx.searchButtonClicked,
-            searchWord: searchView.searchBar.rx.text.orEmpty,
+            searchClick:  searchView.searchController.searchBar.rx.searchButtonClicked,
+            searchWord: searchView.searchController.searchBar.rx.text.orEmpty,
             contentTap: searchView.tableView.rx.itemSelected)
         
         let output = viewModel.transform(input: input)

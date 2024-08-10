@@ -63,7 +63,8 @@ final class SearchTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         configureLayout()
-        initialSetup()
+        configureStackView()
+        selectionStyle = .none
     }
     
     @available(*, unavailable)
@@ -109,12 +110,9 @@ final class SearchTableViewCell: UITableViewCell {
             make.leading.equalTo(contentView.safeAreaLayoutGuide).inset(15)
             make.height.equalTo(20)
         }
-        
-       
-        
     }
  
-    private func initialSetup() {
+    private func configureStackView() {
          
        
          
@@ -129,7 +127,7 @@ final class SearchTableViewCell: UITableViewCell {
        
         stackView.snp.makeConstraints { make in
             make.top.equalTo(companyLabel.snp.bottom).offset(5)
-            make.horizontalEdges.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(15)
+            make.horizontalEdges.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(5)
         }
         
     }

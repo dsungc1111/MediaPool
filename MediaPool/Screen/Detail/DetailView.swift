@@ -17,29 +17,26 @@ final class DetailView: BaseView {
         let view = UIImageView()
         view.clipsToBounds = true
         view.layer.cornerRadius = 10
-        view.layer.borderWidth = 0.5
         return view
     }()
     let appTitleLabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
-        label.numberOfLines = 2
         return label
     }()
     let nameTitle = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15)
         label.textColor = .lightGray
-        label.numberOfLines = 0
         return label
     }()
     let downloadButton = {
         let btn = UIButton()
         btn.setTitle("받기", for: .normal)
-        btn.setTitleColor(.systemBlue, for: .normal)
-        btn.layer.cornerRadius = 10
+        btn.setTitleColor(.white, for: .normal)
+        btn.layer.cornerRadius = 15
         btn.titleLabel?.textAlignment = .center
-        btn.backgroundColor = .lightGray
+        btn.backgroundColor = .systemBlue
         return btn
     }()
     
@@ -71,7 +68,7 @@ final class DetailView: BaseView {
             make.height.equalTo(30)
         }
         appTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(representativeView.safeAreaLayoutGuide).inset(10)
+            make.top.equalTo(representativeView.safeAreaLayoutGuide).inset(20)
             make.leading.equalTo(appLogoView.snp.trailing).offset(10)
             make.trailing.equalTo(representativeView.safeAreaLayoutGuide).inset(10)
         }
