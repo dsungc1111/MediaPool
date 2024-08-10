@@ -33,7 +33,7 @@ final class SearchVC: BaseVC {
         navigationItem.title = "검색"
         
         searchView.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
-        searchView.tableView.rowHeight = 80
+        searchView.tableView.rowHeight = 350
         bind()
     }
     
@@ -64,6 +64,24 @@ final class SearchVC: BaseVC {
                 
                 cell.thumbnail.kf.setImage(with: image)
                 cell.contentTitle.text = element.trackName
+                cell.companyLabel.text = element.artistName
+                if let genre = element.genres.first {
+                    cell.genreLabel.text = genre
+                }
+                let grade = String(format: "%.2f", element.averageUserRatingForCurrentVersion)
+                cell.gradeLabel.setTitle( " \(grade)", for: .normal)
+                let screenShoturl = element.screenshotUrls
+                
+                
+                let first = screenShoturl[0]
+                var preview = URL(string: first)
+                cell.firstPreview.kf.setImage(with: preview)
+                let second = screenShoturl[1]
+                preview = URL(string: second)
+                cell.secondPreview.kf.setImage(with: preview)
+                let third = screenShoturl[2]
+                preview = URL(string: third)
+                cell.thirdPreview.kf.setImage(with: preview)
             }
             .disposed(by: disposeBag)
         

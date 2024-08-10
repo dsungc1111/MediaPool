@@ -27,17 +27,43 @@ final class SearchTableViewCell: UITableViewCell {
         let btn = UIButton()
         btn.setTitle("받기", for: .normal)
         btn.setTitleColor(.systemBlue, for: .normal)
-        btn.layer.cornerRadius = 10
+        btn.layer.cornerRadius = 15
         btn.titleLabel?.textAlignment = .center
         btn.backgroundColor = .lightGray
         return btn
     }()
-  
+    let companyLabel = {
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.font = .systemFont(ofSize: 12)
+        return label
+    }()
+    let genreLabel = {
+        let label = UILabel()
+        label.textColor = .lightGray
+        label.font = .systemFont(ofSize: 12)
+        return label
+    }()
+    let gradeLabel = {
+        let label = UIButton()
+        label.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        label.setTitleColor(.lightGray, for: .normal)
+        label.titleLabel?.font = .systemFont(ofSize: 12)
+        return label
+    }()
+
+    let firstPreview = UIImageView()
+      
+    let secondPreview = UIImageView()
+      
+    let thirdPreview = UIImageView()
+    
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         configureLayout()
-        
+        initialSetup()
     }
     
     @available(*, unavailable)
@@ -49,24 +75,62 @@ final class SearchTableViewCell: UITableViewCell {
         contentView.addSubview(thumbnail)
         contentView.addSubview(downloadButton)
         contentView.addSubview(contentTitle)
-        
+        contentView.addSubview(companyLabel)
+        contentView.addSubview(genreLabel)
+        contentView.addSubview(gradeLabel)
         
         thumbnail.snp.makeConstraints { make in
-            make.leading.centerY.equalTo(contentView.safeAreaLayoutGuide).inset(10)
+            make.leading.top.equalTo(contentView.safeAreaLayoutGuide).inset(10)
             make.size.equalTo(50)
         }
         downloadButton.snp.makeConstraints { make in
+            make.centerY.equalTo(thumbnail.safeAreaLayoutGuide)
             make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(10)
-            make.verticalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(20)
+            make.height.equalTo(30)
             make.width.equalTo(60)
         }
         contentTitle.snp.makeConstraints { make in
             make.leading.equalTo(thumbnail.snp.trailing).offset(20)
-            make.verticalEdges.equalTo(contentView.safeAreaLayoutGuide)
+            make.centerY.equalTo(thumbnail.safeAreaLayoutGuide)
             make.trailing.equalTo(downloadButton.snp.leading).offset(-20)
         }
-                
+        companyLabel.snp.makeConstraints { make in
+            make.top.equalTo(thumbnail.snp.bottom).offset(5)
+            make.centerX.equalTo(contentView.safeAreaLayoutGuide)
+            make.height.equalTo(20)
+        }
+        genreLabel.snp.makeConstraints { make in
+            make.top.equalTo(thumbnail.snp.bottom).offset(5)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(15)
+            make.height.equalTo(20)
+        }
+        gradeLabel.snp.makeConstraints { make in
+            make.top.equalTo(thumbnail.snp.bottom).offset(5)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide).inset(15)
+            make.height.equalTo(20)
+        }
+        
        
+        
+    }
+ 
+    private func initialSetup() {
+         
+       
+         
+       let stackView = UIStackView(arrangedSubviews: [firstPreview, secondPreview, thirdPreview])
+       stackView.axis = .horizontal
+       stackView.distribution = .fillEqually
+       stackView.spacing = 5
+       stackView.layer.cornerRadius = 10
+       stackView.layer.masksToBounds = true
+         
+       contentView.addSubview(stackView)
+       
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(companyLabel.snp.bottom).offset(5)
+            make.horizontalEdges.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(15)
+        }
         
     }
 

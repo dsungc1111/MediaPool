@@ -23,7 +23,7 @@ final class DetailView: BaseView {
     let appTitleLabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 18)
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         return label
     }()
     let nameTitle = {
