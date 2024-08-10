@@ -18,13 +18,32 @@ final class DetailViewModel {
     
     private let disposeBag = DisposeBag()
     
+    struct Input {
+//        let trigger: PublishSubject<Void>
+    }
+    
     struct Output {
         let detailInfo: BehaviorSubject<Results>
+        let screenShot: BehaviorSubject<[String]>
     }
     
     func initialSetting() -> Output {
+        
+        
+            
         detailInfoResult.onNext(element)
-        return Output(detailInfo: detailInfoResult)
+        
+        let screenshotUrls = BehaviorSubject(value: [""])
+        
+        detailInfoResult
+            .subscribe(with: self) { owner, value in
+                screenshotUrls.onNext(value.screenshotUrls)
+            }
+            .disposed(by: disposeBag)
+        
+        
+        
+        return Output(detailInfo: detailInfoResult, screenShot: screenshotUrls)
     }
     
     

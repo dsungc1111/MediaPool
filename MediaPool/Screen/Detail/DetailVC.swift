@@ -27,25 +27,47 @@ final class DetailVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = false
+        
         bind()
     }
     
     
     func bind() {
         
-        
+
         let output = viewModel.initialSetting()
         
         output.detailInfo
-            .bind(with: self) { owner, result in
-                
+            .subscribe(with: self) { owner, result in
+
                 let image = URL(string: result.artworkUrl100)
                 owner.detailView.appLogoView.kf.setImage(with: image)
                 owner.detailView.appTitleLabel.text = result.trackName
                 owner.detailView.nameTitle.text = result.artistName
-                
+                owner.detailView.releaseLabel.text = result.releaseNotes
+                owner.detailView.descriptionLabel.text = result.description
             }
             .disposed(by: disposeBag)
+        
+//        output.screenShot
+//            .bind(to: detailView.collectionView.rx.items(cellIdentifier: DetailImageCollectionViewCell.identifier, cellType: DetailImageCollectionViewCell.self)) {
+//                (item, element, cell) in
+//                print(element, "ㅇㄹㄴㅇㄹㅇㄴㄹㄴㅇㄹㅇㄴㄹ")
+//                let image = URL(string: element)
+//                cell.imageView.kf.setImage(with: image)
+//            }
+//            .disposed(by: disposeBag)
+        
+      
+        
+//        output.screenShot
+//            .bind(to: detailView.collectionView.rx.items(cellIdentifier: DetailImageCollectionViewCell.identifier, cellType: DetailImageCollectionViewCell.self)) {
+//                (item, element, cell) in
+//                print(element, "ㅇㄹㄴㅇㄹㅇㄴㄹㄴㅇㄹㅇㄴㄹ")
+//                let image = URL(string: element)
+//                cell.imageView.kf.setImage(with: image)
+//            }
+//            .disposed(by: disposeBag)
     }
  
 

@@ -32,6 +32,7 @@
 		8B7AD3232C64E2510002F764 /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7AD3222C64E2510002F764 /* DetailVC.swift */; };
 		8BA50B8C2C65A37800A90778 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA50B8B2C65A37800A90778 /* DetailViewModel.swift */; };
 		8BA50B8E2C65A89E00A90778 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA50B8D2C65A89E00A90778 /* DetailView.swift */; };
+		8BA50B902C6776B200A90778 /* DetailImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA50B8F2C6776B200A90778 /* DetailImageCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		8B7AD3222C64E2510002F764 /* DetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 		8BA50B8B2C65A37800A90778 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		8BA50B8D2C65A89E00A90778 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		8BA50B8F2C6776B200A90778 /* DetailImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				8B7AD3222C64E2510002F764 /* DetailVC.swift */,
 				8BA50B8B2C65A37800A90778 /* DetailViewModel.swift */,
 				8BA50B8D2C65A89E00A90778 /* DetailView.swift */,
+				8BA50B8F2C6776B200A90778 /* DetailImageCollectionViewCell.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				8B7AD3232C64E2510002F764 /* DetailVC.swift in Sources */,
 				8B7AD2FB2C64B7560002F764 /* ArcadeVC.swift in Sources */,
 				8B7AD2DC2C64B38A0002F764 /* AppDelegate.swift in Sources */,
+				8BA50B902C6776B200A90778 /* DetailImageCollectionViewCell.swift in Sources */,
 				8B7AD30E2C64BC080002F764 /* SearchViewModel.swift in Sources */,
 				8B7AD2FD2C64B7B10002F764 /* SearchVC.swift in Sources */,
 				8B7AD2F42C64B58A0002F764 /* GameVC.swift in Sources */,
