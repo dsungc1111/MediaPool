@@ -28,11 +28,10 @@ final class DetailVC: BaseVC {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = false
         
-        bind()
     }
     
     
-    func bind() {
+    override func bind() {
         
 
         let output = viewModel.initialSetting()
@@ -49,25 +48,13 @@ final class DetailVC: BaseVC {
             }
             .disposed(by: disposeBag)
         
-//        output.screenShot
-//            .bind(to: detailView.collectionView.rx.items(cellIdentifier: DetailImageCollectionViewCell.identifier, cellType: DetailImageCollectionViewCell.self)) {
-//                (item, element, cell) in
-//                print(element, "ㅇㄹㄴㅇㄹㅇㄴㄹㄴㅇㄹㅇㄴㄹ")
-//                let image = URL(string: element)
-//                cell.imageView.kf.setImage(with: image)
-//            }
-//            .disposed(by: disposeBag)
+        output.screenShot
+            .bind(to: detailView.collectionView.rx.items(cellIdentifier: DetailImageCollectionViewCell.identifier, cellType: DetailImageCollectionViewCell.self)) { (item, element, cell) in
+                let imageUrl = URL(string: element)
+                cell.imageView.kf.setImage(with: imageUrl)
+            }
+            .disposed(by: disposeBag)
         
-      
-        
-//        output.screenShot
-//            .bind(to: detailView.collectionView.rx.items(cellIdentifier: DetailImageCollectionViewCell.identifier, cellType: DetailImageCollectionViewCell.self)) {
-//                (item, element, cell) in
-//                print(element, "ㅇㄹㄴㅇㄹㅇㄴㄹㄴㅇㄹㅇㄴㄹ")
-//                let image = URL(string: element)
-//                cell.imageView.kf.setImage(with: image)
-//            }
-//            .disposed(by: disposeBag)
     }
  
 

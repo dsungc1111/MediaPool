@@ -55,13 +55,11 @@ final class DetailView: BaseView {
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
     private static func collectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
-        let sectionSpacing: CGFloat = 10
         let cellSpacing: CGFloat = 10
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 300, height: 100)
+        layout.itemSize = CGSize(width: 200, height: 330)
         layout.minimumInteritemSpacing = cellSpacing
         layout.minimumLineSpacing = cellSpacing
-        layout.sectionInset = UIEdgeInsets(top: sectionSpacing, left: sectionSpacing, bottom: sectionSpacing, right: 0)
         return layout
     }
     let descriptionLabel = {
@@ -74,6 +72,7 @@ final class DetailView: BaseView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         collectionView.register(DetailImageCollectionViewCell.self, forCellWithReuseIdentifier: DetailImageCollectionViewCell.identifier)
+        collectionView.showsHorizontalScrollIndicator = false
     }
     
     required init?(coder: NSCoder) {
@@ -127,15 +126,15 @@ final class DetailView: BaseView {
         }
         releaseLabel.snp.makeConstraints { make in
             make.top.equalTo(updateLabel.snp.bottom).offset(10)
-            make.leading.equalTo(contentView.snp.leading).inset(10)
+            make.leading.equalTo(contentView.snp.leading).inset(20)
         }
-//        collectionView.snp.makeConstraints { make in
-//            make.top.equalTo(releaseLabel.snp.bottom).offset(10)
-//            make.horizontalEdges.equalTo(representativeView.safeAreaLayoutGuide).inset(20)
-//        }
-        collectionView.backgroundColor = .systemBlue
-        descriptionLabel.snp.makeConstraints { make in
+        collectionView.snp.makeConstraints { make in
             make.top.equalTo(releaseLabel.snp.bottom).offset(10)
+            make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(20)
+            make.height.equalTo(350)
+        }
+        descriptionLabel.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom).offset(10)
             make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(20)
             make.bottom.equalTo(contentView.snp.bottom)
         }

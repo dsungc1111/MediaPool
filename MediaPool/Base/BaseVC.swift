@@ -13,9 +13,10 @@ class BaseVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         // Do any additional setup after loading the view.
+        bind()
     }
     
-
+    func bind() {}
     /*
     // MARK: - Navigation
 

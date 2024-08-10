@@ -18,8 +18,8 @@ final class SearchView: BaseView {
         addSubview(tableView)
         
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).offset(5)
-            make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
+            make.top.bottom.equalTo(safeAreaLayoutGuide).inset(5)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(10)
         }
     }
 }

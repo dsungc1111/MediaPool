@@ -29,8 +29,6 @@ final class DetailViewModel {
     
     func initialSetting() -> Output {
         
-        
-            
         detailInfoResult.onNext(element)
         
         let screenshotUrls = BehaviorSubject(value: [""])
@@ -38,6 +36,7 @@ final class DetailViewModel {
         detailInfoResult
             .subscribe(with: self) { owner, value in
                 screenshotUrls.onNext(value.screenshotUrls)
+                print(value.screenshotUrls.count)
             }
             .disposed(by: disposeBag)
         

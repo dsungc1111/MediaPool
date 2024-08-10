@@ -35,12 +35,12 @@ final class SearchVC: BaseVC {
         self.navigationItem.searchController = searchView.searchController
         
         searchView.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
-        searchView.tableView.rowHeight = 350
-        bind()
+        searchView.tableView.rowHeight = 320
+        
     }
     
     
-    func bind() {
+    override func bind() {
         
         let input = SearchViewModel.Input(
             searchClick:  searchView.searchController.searchBar.rx.searchButtonClicked,

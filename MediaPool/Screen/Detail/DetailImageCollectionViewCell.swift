@@ -14,17 +14,18 @@ final class DetailImageCollectionViewCell: UICollectionViewCell {
     static let identifier = "DetailImageCollectionViewCell"
     
     let imageView = {
-        let view = UIImageView()
-        
-        return view
+        let image = UIImageView()
+        image.clipsToBounds = true
+        image.contentMode = .scaleAspectFill
+        image.layer.cornerRadius = 15
+        return image
     }()
     
     var disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .lightGray
-        
+        configureLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -37,6 +38,7 @@ final class DetailImageCollectionViewCell: UICollectionViewCell {
         imageView.snp.makeConstraints { make in
             make.edges.equalTo(contentView.safeAreaLayoutGuide)
         }
+        imageView.backgroundColor = .systemBlue
     }
     
     override func prepareForReuse() {

@@ -114,8 +114,6 @@ final class SearchTableViewCell: UITableViewCell {
  
     private func configureStackView() {
          
-       
-         
        let stackView = UIStackView(arrangedSubviews: [firstPreview, secondPreview, thirdPreview])
        stackView.axis = .horizontal
        stackView.distribution = .fillEqually
@@ -127,7 +125,8 @@ final class SearchTableViewCell: UITableViewCell {
        
         stackView.snp.makeConstraints { make in
             make.top.equalTo(companyLabel.snp.bottom).offset(5)
-            make.horizontalEdges.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(5)
+            make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(5)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(10)
         }
         
     }
