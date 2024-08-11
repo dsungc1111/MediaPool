@@ -11,10 +11,10 @@ import RxCocoa
 
 final class DetailViewModel {
     
-    var element: Results = Results(trackName: "", artworkUrl100: "", artistName: "", screenshotUrls: [], description: "", releaseNotes: "", genres: [], averageUserRatingForCurrentVersion: 0.0)
+    var element: Results = Results(trackId: 0, trackName: "", artworkUrl100: "", artistName: "", screenshotUrls: [], description: "", releaseNotes: "", genres: [], averageUserRatingForCurrentVersion: 0.0)
     
     
-    let detailInfoResult = BehaviorSubject(value: Results(trackName: "", artworkUrl100: "", artistName: "", screenshotUrls: [""], description: "", releaseNotes: "", genres: [], averageUserRatingForCurrentVersion: 0.0))
+    let detailInfoResult = BehaviorSubject(value: Results(trackId: 0, trackName: "", artworkUrl100: "", artistName: "", screenshotUrls: [""], description: "", releaseNotes: "", genres: [], averageUserRatingForCurrentVersion: 0.0))
     
     private let disposeBag = DisposeBag()
     

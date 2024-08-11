@@ -39,6 +39,9 @@ final class SearchVC: BaseVC {
         searchView.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
         searchView.tableView.rowHeight = 320
         
+        let aa = RealmManager()
+        aa.detectRealmURL()
+        
     }
     
     
@@ -59,7 +62,6 @@ final class SearchVC: BaseVC {
         
         output.searchList
             .bind(to: searchView.collectionView.rx.items(cellIdentifier: SearchCollectionViewCell.identifier, cellType: SearchCollectionViewCell.self)) { (row, element, cell) in
-                
                 
                 cell.resultButton.setTitle(element, for: .normal)
                 
