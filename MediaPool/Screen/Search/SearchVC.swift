@@ -51,15 +51,18 @@ final class SearchVC: BaseVC {
         let input = SearchViewModel.Input(
             searchClick:  searchView.searchController.searchBar.rx.searchButtonClicked,
             searchWord: searchView.searchController.searchBar.rx.text.orEmpty,
-            contentTap: searchView.tableView.rx.itemSelected, trigger: trigger)
+            contentTap: searchView.tableView.rx.itemSelected, trigger: trigger, modelSelected: searchView.collectionView.rx.modelSelected(String.self))
+        
         
         let output = viewModel.transform(input: input)
+        
         
         output.searchList
             .bind(to: searchView.collectionView.rx.items(cellIdentifier: SearchCollectionViewCell.identifier, cellType: SearchCollectionViewCell.self)) { (row, element, cell) in
                 
                 
                 cell.resultButton.setTitle(element, for: .normal)
+                
             }
             .disposed(by: disposeBag)
         

@@ -19,8 +19,11 @@ final class SearchCollectionViewCell: UICollectionViewCell {
         btn.backgroundColor = .systemGray5
         btn.setTitleColor(.systemBlue, for: .normal)
         btn.layer.cornerRadius = 15
+        btn.isEnabled = false
         return btn
     }()
+    
+    var disposeBag = DisposeBag()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

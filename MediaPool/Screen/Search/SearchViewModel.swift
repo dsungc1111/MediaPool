@@ -26,6 +26,7 @@ final class SearchViewModel {
         let searchWord: ControlProperty<String>
         let contentTap: ControlEvent<IndexPath>
         let trigger: PublishSubject<Void>
+        let modelSelected: ControlEvent<String>
     }
     
     struct Output {
@@ -64,7 +65,6 @@ final class SearchViewModel {
                     }
                     .disposed(by: owner.disposeBag)
                 
-                print(owner.searchResultList.count)
                 for i in 0..<owner.searchResultList.count {
                     if owner.searchResultList[i] == value {
                         owner.searchResultList.remove(at: i)
@@ -79,8 +79,29 @@ final class SearchViewModel {
             }
             .disposed(by: disposeBag)
         
-        
-       
+        input.modelSelected
+            .subscribe(with: self) { owner, value in
+                print(value)
+                NetworkManager.shared.callRequest(query: value)
+                    .subscribe(with: self) { owner, content in
+                        searchResult.onNext(content.results)
+                    }
+                    .disposed(by: owner.disposeBag)
+                
+                for i in 0..<owner.searchResultList.count {
+                    if owner.searchResultList[i] == value {
+                        owner.searchResultList.remove(at: i)
+                        break
+                    }
+                }
+                owner.searchResultList.insert(value, at: 0)
+                
+                UserDefaults.standard.setValue(owner.searchResultList, forKey: UserDefaultKey.result.rawValue)
+                
+                searchList.onNext(owner.searchResultList)
+            }
+            .disposed(by: disposeBag)
+          
         
         
         return Output(searchResult: searchResult, contentTap: input.contentTap, searchList: searchList )
@@ -88,3 +109,48 @@ final class SearchViewModel {
     }
     
 }
+
+//extension SearchViewModel {
+//    
+//    struct CellInput {
+//        let tap: ControlEvent<Void>
+//    }
+//    struct CellOutput {
+//        
+//    }
+//    
+//    
+//    
+//    func transformCell(input: CellInput) -> CellOutput {
+//        
+//        
+//        return CellOutput
+//    }
+//}
+
+/*
+ 
+ input.recordTap
+     .subscribe(with: self) { owner, value in
+         print("Df")
+         NetworkManager.shared.callRequest(query: value)
+             .subscribe(with: self) { owner, content in
+                 searchResult.onNext(content.results)
+             }
+             .disposed(by: owner.disposeBag)
+         
+         for i in 0..<owner.searchResultList.count {
+             if owner.searchResultList[i] == value {
+                 owner.searchResultList.remove(at: i)
+                 break
+             }
+         }
+         owner.searchResultList.insert(value, at: 0)
+         
+         UserDefaults.standard.setValue(owner.searchResultList, forKey: UserDefaultKey.result.rawValue)
+         
+         searchList.onNext(owner.searchResultList)
+     }
+     .disposed(by: disposeBag)
+ 
+ */
