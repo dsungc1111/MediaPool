@@ -80,7 +80,8 @@ final class SearchVC: BaseVC {
       
         
         output.searchResult
-            .bind( to: searchView.tableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
+            .bind(to: searchView.tableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
+                
                 
                 let url = element.artworkUrl100
                 let image = URL(string: url)
@@ -101,7 +102,6 @@ final class SearchVC: BaseVC {
                     }
                 }
                 
-                
                 let first = screenShoturl[0]
                 var preview = URL(string: first)
                 cell.firstPreview.kf.setImage(with: preview)
@@ -116,6 +116,7 @@ final class SearchVC: BaseVC {
                 cell.downloadButton.rx.tap
                     .subscribe(with: self) { owner, _ in
                         owner.realmManager.saveApp(element: element)
+                        cell.downloadButton.setTitle("열기", for: .normal)
                     }
                     .disposed(by: cell.disposeBag)
             }
@@ -133,12 +134,12 @@ final class SearchVC: BaseVC {
             }
             .disposed(by:  disposeBag)
         
-     
         
-        
-            
-        
-        
+        output.searchItem
+            .bind(with: self) { owner, searchItem in
+                owner.searchView.searchController.searchBar.text = searchItem
+            }
+            .disposed(by: disposeBag)
         
     }
 

@@ -34,6 +34,7 @@ final class SearchViewModel {
         let searchResult: PublishSubject<[Results]>
         let contentTap: ControlEvent<IndexPath>
         let searchList: BehaviorSubject<[String]>
+        let searchItem: BehaviorSubject<String>
     }
     
     
@@ -80,9 +81,12 @@ final class SearchViewModel {
             }
             .disposed(by: disposeBag)
         
+        let modelSelected = BehaviorSubject(value: "")
+        
         input.modelSelected
             .subscribe(with: self) { owner, value in
-                print(value)
+                
+                modelSelected.onNext(value)
                 NetworkManager.shared.callRequest(query: value)
                     .subscribe(with: self) { owner, content in
                         searchResult.onNext(content.results)
@@ -105,7 +109,7 @@ final class SearchViewModel {
           
         
         
-        return Output(searchResult: searchResult, contentTap: input.contentTap, searchList: searchList )
+        return Output(searchResult: searchResult, contentTap: input.contentTap, searchList: searchList, searchItem: modelSelected )
         
     }
     
