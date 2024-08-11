@@ -20,6 +20,8 @@ final class SearchVC: BaseVC {
     
     private var newlist: [Results] = []
     
+    private let realmManager = RealmManager()
+    
     override func loadView() {
         view = searchView
     }
@@ -48,7 +50,7 @@ final class SearchVC: BaseVC {
     override func bind() {
         
         let trigger = PublishSubject<Void>()
-        
+        let downloadedApp = realmManager.fetchDownloadedApp()
         
         
         let input = SearchViewModel.Input(
@@ -59,7 +61,7 @@ final class SearchVC: BaseVC {
         
         let output = viewModel.transform(input: input)
         
-        
+        // MARK: - 검색기록
         output.searchList
             .bind(to: searchView.collectionView.rx.items(cellIdentifier: SearchCollectionViewCell.identifier, cellType: SearchCollectionViewCell.self)) { (row, element, cell) in
                 
@@ -69,7 +71,7 @@ final class SearchVC: BaseVC {
             .disposed(by: disposeBag)
         
         
-        
+        // MARK: - 검색결과 어플 보여주는 용도
         output.searchResult
             .bind(with: self) { owner, result in
                 owner.newlist = result
@@ -93,6 +95,12 @@ final class SearchVC: BaseVC {
                 cell.gradeLabel.setTitle( " \(grade)", for: .normal)
                 let screenShoturl = element.screenshotUrls
                 
+                for app in downloadedApp {
+                    if app.trackId == element.trackId {
+                        cell.downloadButton.setTitle("열기", for: .normal)
+                    }
+                }
+                
                 
                 let first = screenShoturl[0]
                 var preview = URL(string: first)
@@ -104,10 +112,16 @@ final class SearchVC: BaseVC {
                 preview = URL(string: third)
                 cell.thirdPreview.kf.setImage(with: preview)
                 
+                
+                cell.downloadButton.rx.tap
+                    .subscribe(with: self) { owner, _ in
+                        owner.realmManager.saveApp(element: element)
+                    }
+                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
         
-        
+        // MARK: - 컨텐츠 클릭시 화면 전환
        
         output.contentTap
             .bind(with: self) { owner, indexPath in

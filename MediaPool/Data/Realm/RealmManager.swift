@@ -11,7 +11,7 @@ import RealmSwift
 final class RealmManager {
     
     private let realm: Realm?
-    
+//    private let realm = try! Realm()
     init() {
         
         do {
@@ -21,11 +21,31 @@ final class RealmManager {
             realm = nil
         }
     }
-    
+//    
     func detectRealmURL() {
         print(realm?.configuration.fileURL ?? "")
     }
     
+    func fetchDownloadedApp() -> [DownloadInfoModel] {
+        if let value = realm?.objects(DownloadInfoModel.self) {
+            return Array(value)
+        } else { return [] }
+    }
+    
+    func saveApp(element: Results) {
+        print(#function)
+        guard let realm = realm else { return }
+        
+        do {
+            try realm.write {
+                realm.create(DownloadInfoModel.self, value: ["trackId" : element.trackId, "trackname" : element.trackName ])
+            }
+        } catch {
+            print("안될때")
+        }
+       
+        
+    }
     
     
 }

@@ -9,12 +9,13 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-enum UserDefaultKey: String {
-    case result
-}
+
 
 final class SearchViewModel {
     
+    enum UserDefaultKey: String {
+        case result
+    }
     
     
     private let disposeBag = DisposeBag()
