@@ -9,42 +9,81 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+enum UserDefaultKey: String {
+    case result
+}
+
 final class SearchViewModel {
     
+    
+    
     private let disposeBag = DisposeBag()
+    
+    private var searchResultList: [String] = []
     
     struct Input {
         let searchClick: ControlEvent<Void>
         let searchWord: ControlProperty<String>
         let contentTap: ControlEvent<IndexPath>
+        let trigger: PublishSubject<Void>
     }
     
     struct Output {
         let searchResult: PublishSubject<[Results]>
         let contentTap: ControlEvent<IndexPath>
+        let searchList: BehaviorSubject<[String]>
     }
     
     
     func transform(input: Input) -> Output {
         
+        if let savedSearch = UserDefaults.standard.array(forKey: UserDefaultKey.result.rawValue) as? [String] {
+            
+            searchResultList = savedSearch
+        }
+        
         let searchResult = PublishSubject<[Results]>()
+        
+        let searchList = BehaviorSubject(value: searchResultList)
+        
+        input.trigger
+            .subscribe(with: self) { owner, _ in
+                print("실행?")
+                searchList.onNext(owner.searchResultList)
+            }
+            .disposed(by: disposeBag)
         
         input.searchClick
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .withLatestFrom(input.searchWord)
             .subscribe(with: self) { owner, value in
+                
                 NetworkManager.shared.callRequest(query: value)
                     .subscribe(with: self) { owner, content in
                         searchResult.onNext(content.results)
                     }
                     .disposed(by: owner.disposeBag)
                 
+                print(owner.searchResultList.count)
+                for i in 0..<owner.searchResultList.count {
+                    if owner.searchResultList[i] == value {
+                        owner.searchResultList.remove(at: i)
+                        break
+                    }
+                }
+                owner.searchResultList.insert(value, at: 0)
+                
+                UserDefaults.standard.setValue(owner.searchResultList, forKey: UserDefaultKey.result.rawValue)
+                
+                searchList.onNext(owner.searchResultList)
             }
             .disposed(by: disposeBag)
         
         
+       
         
-        return Output(searchResult: searchResult, contentTap: input.contentTap )
+        
+        return Output(searchResult: searchResult, contentTap: input.contentTap, searchList: searchList )
         
     }
     

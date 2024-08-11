@@ -36,11 +36,8 @@ final class DetailViewModel {
         detailInfoResult
             .subscribe(with: self) { owner, value in
                 screenshotUrls.onNext(value.screenshotUrls)
-                print(value.screenshotUrls.count)
             }
             .disposed(by: disposeBag)
-        
-        
         
         return Output(detailInfo: detailInfoResult, screenShot: screenshotUrls)
     }

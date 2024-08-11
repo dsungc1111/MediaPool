@@ -33,6 +33,7 @@
 		8BA50B8C2C65A37800A90778 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA50B8B2C65A37800A90778 /* DetailViewModel.swift */; };
 		8BA50B8E2C65A89E00A90778 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA50B8D2C65A89E00A90778 /* DetailView.swift */; };
 		8BA50B902C6776B200A90778 /* DetailImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA50B8F2C6776B200A90778 /* DetailImageCollectionViewCell.swift */; };
+		8BC986072C687B3300B69112 /* SearchCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC986062C687B3300B69112 /* SearchCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		8BA50B8B2C65A37800A90778 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		8BA50B8D2C65A89E00A90778 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		8BA50B8F2C6776B200A90778 /* DetailImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		8BC986062C687B3300B69112 /* SearchCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				8B7AD2FC2C64B7B10002F764 /* SearchVC.swift */,
 				8B7AD30D2C64BC080002F764 /* SearchViewModel.swift */,
 				8B7AD3122C64D0BC0002F764 /* SearchTableViewCell.swift */,
+				8BC986062C687B3300B69112 /* SearchCollectionViewCell.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				8B7AD3072C64BAA50002F764 /* BaseView.swift in Sources */,
 				8B7AD2DE2C64B38A0002F764 /* SceneDelegate.swift in Sources */,
 				8B7AD3132C64D0BC0002F764 /* SearchTableViewCell.swift in Sources */,
+				8BC986072C687B3300B69112 /* SearchCollectionViewCell.swift in Sources */,
 				8BA50B8C2C65A37800A90778 /* DetailViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

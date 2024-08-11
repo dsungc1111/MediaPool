@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-
+import RxSwift
 
 final class SearchTableViewCell: UITableViewCell {
 
@@ -29,7 +29,7 @@ final class SearchTableViewCell: UITableViewCell {
         btn.setTitleColor(.systemBlue, for: .normal)
         btn.layer.cornerRadius = 15
         btn.titleLabel?.textAlignment = .center
-        btn.backgroundColor = .lightGray
+        btn.backgroundColor = .systemGray5
         return btn
     }()
     let companyLabel = {
@@ -58,6 +58,7 @@ final class SearchTableViewCell: UITableViewCell {
       
     let thirdPreview = UIImageView()
     
+    var disposeBag = DisposeBag()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -70,6 +71,10 @@ final class SearchTableViewCell: UITableViewCell {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        disposeBag = DisposeBag()
     }
     
     func configureLayout() {

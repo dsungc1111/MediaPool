@@ -17,7 +17,9 @@ final class SearchVC: BaseVC {
     private let searchView = SearchView()
     
     private let viewModel = SearchViewModel()
-    var newlist: [Results] = []
+    
+    private var newlist: [Results] = []
+    
     override func loadView() {
         view = searchView
     }
@@ -42,12 +44,24 @@ final class SearchVC: BaseVC {
     
     override func bind() {
         
+        let trigger = PublishSubject<Void>()
+        
+        
+        
         let input = SearchViewModel.Input(
             searchClick:  searchView.searchController.searchBar.rx.searchButtonClicked,
             searchWord: searchView.searchController.searchBar.rx.text.orEmpty,
-            contentTap: searchView.tableView.rx.itemSelected)
+            contentTap: searchView.tableView.rx.itemSelected, trigger: trigger)
         
         let output = viewModel.transform(input: input)
+        
+        output.searchList
+            .bind(to: searchView.collectionView.rx.items(cellIdentifier: SearchCollectionViewCell.identifier, cellType: SearchCollectionViewCell.self)) { (row, element, cell) in
+                
+                
+                cell.resultButton.setTitle(element, for: .normal)
+            }
+            .disposed(by: disposeBag)
         
         
         
@@ -84,6 +98,7 @@ final class SearchVC: BaseVC {
                 let third = screenShoturl[2]
                 preview = URL(string: third)
                 cell.thirdPreview.kf.setImage(with: preview)
+                
             }
             .disposed(by: disposeBag)
         
@@ -98,6 +113,13 @@ final class SearchVC: BaseVC {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by:  disposeBag)
+        
+     
+        
+        
+            
+        
+        
         
     }
 
