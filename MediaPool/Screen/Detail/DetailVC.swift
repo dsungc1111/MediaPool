@@ -34,36 +34,17 @@ final class DetailVC: BaseVC {
     
     override func bind() {
         
-
         let output = viewModel.initialSetting()
-        let downloadedApp = realmManager.fetchDownloadedApp()
         
         output.detailInfo
             .subscribe(with: self) { owner, result in
-
-                let image = URL(string: result.artworkUrl100)
-                owner.detailView.appLogoView.kf.setImage(with: image)
-                owner.detailView.appTitleLabel.text = result.trackName
-                owner.detailView.nameTitle.text = result.artistName
-                owner.detailView.releaseLabel.text = result.releaseNotes
-                owner.detailView.descriptionLabel.text = result.description
-                
-                for app in downloadedApp {
-                    if app.trackId == result.trackId {
-                        owner.detailView.downloadButton.setTitle("열기", for: .normal)
-                    }
-                }
+                owner.detailView.configureUI(result: result)
             }
             .disposed(by: disposeBag)
         
         output.screenShot
             .bind(to: detailView.collectionView.rx.items(cellIdentifier: DetailImageCollectionViewCell.identifier, cellType: DetailImageCollectionViewCell.self)) { (item, element, cell) in
-                let imageUrl = URL(string: element)
-                cell.imageView.kf.setImage(with: imageUrl)
-                
-                
-                
-                
+                cell.configureCell(element: element)
             }
             .disposed(by: disposeBag)
         

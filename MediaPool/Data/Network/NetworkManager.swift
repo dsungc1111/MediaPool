@@ -26,9 +26,6 @@ final class NetworkManager {
     
     func callRequest(query: String) -> Single<Content> {
         
-//        let url =  "https://itunes.apple.com/search?term=\(query)&media=software"
-        //        let request = URL(string: url)!
-        
         var component = URLComponents()
         component.scheme = "https"
         component.host = "itunes.apple.com"
@@ -46,7 +43,6 @@ final class NetworkManager {
             
             URLSession.shared.dataTask(with: request) { data, response, error in
                 
-             
                 if let error = error {
                     observer(.failure(NetworkError.failedRequest))
                 }

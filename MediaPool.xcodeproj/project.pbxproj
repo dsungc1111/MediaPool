@@ -38,7 +38,7 @@
 		8BC986122C68BE8B00B69112 /* AppInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC986112C68BE8B00B69112 /* AppInfoModel.swift */; };
 		8BC986142C68C2C100B69112 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC986132C68C2C100B69112 /* RealmManager.swift */; };
 		8BC986172C68C65900B69112 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8BC986162C68C65900B69112 /* RealmSwift */; };
-		8BC986292C6A37D700B69112 /* SearchTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC986282C6A37D700B69112 /* SearchTableViewModel.swift */; };
+		8BC9862B2C6ABBE800B69112 /* searchCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC9862A2C6ABBE800B69112 /* searchCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,7 +68,7 @@
 		8BC986092C68AB2900B69112 /* DownloadInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadInfoModel.swift; sourceTree = "<group>"; };
 		8BC986112C68BE8B00B69112 /* AppInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoModel.swift; sourceTree = "<group>"; };
 		8BC986132C68C2C100B69112 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
-		8BC986282C6A37D700B69112 /* SearchTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewModel.swift; sourceTree = "<group>"; };
+		8BC9862A2C6ABBE800B69112 /* searchCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = searchCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,7 +159,7 @@
 				8B7AD30D2C64BC080002F764 /* SearchViewModel.swift */,
 				8B7AD3122C64D0BC0002F764 /* SearchTableViewCell.swift */,
 				8BC986062C687B3300B69112 /* SearchCollectionViewCell.swift */,
-				8BC986282C6A37D700B69112 /* SearchTableViewModel.swift */,
+				8BC9862A2C6ABBE800B69112 /* searchCellViewModel.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -309,8 +309,8 @@
 				8B7AD2DE2C64B38A0002F764 /* SceneDelegate.swift in Sources */,
 				8B7AD3132C64D0BC0002F764 /* SearchTableViewCell.swift in Sources */,
 				8BC986072C687B3300B69112 /* SearchCollectionViewCell.swift in Sources */,
+				8BC9862B2C6ABBE800B69112 /* searchCellViewModel.swift in Sources */,
 				8BA50B8C2C65A37800A90778 /* DetailViewModel.swift in Sources */,
-				8BC986292C6A37D700B69112 /* SearchTableViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

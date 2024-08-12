@@ -41,17 +41,12 @@ final class SearchVC: BaseVC {
         searchView.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
         searchView.tableView.rowHeight = 320
         
-        let aa = RealmManager()
-        aa.detectRealmURL()
-        
     }
     
     
     override func bind() {
         
         let trigger = PublishSubject<Void>()
-        let downloadedApp = realmManager.fetchDownloadedApp()
-        
         
         let input = SearchViewModel.Input(
             searchClick:  searchView.searchController.searchBar.rx.searchButtonClicked,
@@ -80,40 +75,19 @@ final class SearchVC: BaseVC {
         output.searchResult
             .bind(to: searchView.tableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
                 
+                cell.configureCell(element: element)
                 
-                let url = element.artworkUrl100
-                let image = URL(string: url)
+                let cellViewModel = searchCellViewModel()
                 
-                cell.thumbnail.kf.setImage(with: image)
-                cell.contentTitle.text = element.trackName
-                cell.companyLabel.text = element.artistName
-                if let genre = element.genres.first {
-                    cell.genreLabel.text = genre
-                }
-                let grade = String(format: "%.2f", element.averageUserRatingForCurrentVersion)
-                cell.gradeLabel.setTitle( " \(grade)", for: .normal)
-                let screenShoturl = element.screenshotUrls
+                let cellInput = searchCellViewModel.Input(cellTap: cell.downloadButton.rx.tap, cellElement: Observable.just(element))
                 
-                for app in downloadedApp {
-                    if app.trackId == element.trackId {
-                        cell.downloadButton.setTitle("열기", for: .normal)
-                    }
-                }
+                let cellOutput = cellViewModel.cellTransform(input: cellInput)
                 
-                let first = screenShoturl[0]
-                var preview = URL(string: first)
-                cell.firstPreview.kf.setImage(with: preview)
-                let second = screenShoturl[1]
-                preview = URL(string: second)
-                cell.secondPreview.kf.setImage(with: preview)
-                let third = screenShoturl[2]
-                preview = URL(string: third)
-                cell.thirdPreview.kf.setImage(with: preview)
+                cellOutput.text
+                    .bind(to: cell.downloadButton.rx.title())
+                    .disposed(by: cell.disposeBag)
                 
-                
-                
-                
-//                cell.downloadButton.rx.tap
+//                let a = cell.downloadButton.rx.tap
 //                    .subscribe(with: self) { owner, _ in
 //                        owner.realmManager.saveApp(element: element)
 //                        cell.downloadButton.setTitle("열기", for: .normal)
@@ -121,11 +95,6 @@ final class SearchVC: BaseVC {
 //                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
-        
-        
-        
-        
-        
         // MARK: - 컨텐츠 클릭시 화면 전환
        
         output.contentTap
@@ -144,8 +113,5 @@ final class SearchVC: BaseVC {
                 owner.searchView.searchController.searchBar.text = searchItem
             }
             .disposed(by: disposeBag)
-        
     }
-
-
 }

@@ -13,6 +13,8 @@ final class SearchTableViewCell: UITableViewCell {
 
     static let identifier = "SearchTableViewCell"
     
+    private let realmManager = RealmManager()
+    
     let thumbnail = {
         let view = UIImageView()
         view.clipsToBounds = true
@@ -60,14 +62,12 @@ final class SearchTableViewCell: UITableViewCell {
     
     var disposeBag = DisposeBag()
     
-    private let viewModel = SearchTableViewModel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         configureLayout()
         configureStackView()
-        bind()
         selectionStyle = .none
     }
     
@@ -80,20 +80,6 @@ final class SearchTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         disposeBag = DisposeBag()
         downloadButton.setTitle("받기", for: .normal)
-    }
-    
-    func bind() {
-        
-        let input = SearchTableViewModel.Input(downButtonTap: downloadButton.rx.tap)
-        
-        let output = viewModel.transform(input: input)
-        
-        output.text
-            .bind(with: self) { owner, value in
-                owner.downloadButton.setTitle(value, for: .normal)
-            }
-            .disposed(by: disposeBag)
-        
     }
     
     func configureLayout() {
@@ -155,4 +141,36 @@ final class SearchTableViewCell: UITableViewCell {
         
     }
 
+    func configureCell(element: Results) {
+        let downloadedApp = realmManager.fetchDownloadedApp()
+        let url = element.artworkUrl100
+        let image = URL(string: url)
+        
+        thumbnail.kf.setImage(with: image)
+        contentTitle.text = element.trackName
+        companyLabel.text = element.artistName
+        if let genre = element.genres.first {
+            genreLabel.text = genre
+        }
+        let grade = String(format: "%.2f", element.averageUserRatingForCurrentVersion)
+        gradeLabel.setTitle( " \(grade)", for: .normal)
+        let screenShoturl = element.screenshotUrls
+        
+        for app in downloadedApp {
+            if app.trackId == element.trackId {
+                downloadButton.setTitle("열기", for: .normal)
+            }
+        }
+        
+        let first = screenShoturl[0]
+        var preview = URL(string: first)
+        firstPreview.kf.setImage(with: preview)
+        let second = screenShoturl[1]
+        preview = URL(string: second)
+        secondPreview.kf.setImage(with: preview)
+        let third = screenShoturl[2]
+        preview = URL(string: third)
+        thirdPreview.kf.setImage(with: preview)
+    }
+    
 }

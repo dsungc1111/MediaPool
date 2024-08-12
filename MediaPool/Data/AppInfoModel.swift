@@ -8,6 +8,8 @@
 import Foundation
 
 
+// 구조체 네이밍 다시 생각해볼 것.
+
 struct Results: Decodable {
     let trackId: Int
     let trackName: String // 앱 이름

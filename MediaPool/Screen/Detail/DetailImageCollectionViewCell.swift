@@ -45,4 +45,10 @@ final class DetailImageCollectionViewCell: UICollectionViewCell {
         disposeBag = DisposeBag()
     }
     
+    
+    func configureCell(element: String) {
+        let imageUrl = URL(string: element)
+        imageView.kf.setImage(with: imageUrl)
+    }
+    
 }

@@ -69,6 +69,7 @@ final class DetailView: BaseView {
         label.numberOfLines = 0
         return label
     }()
+    private let realmManager = RealmManager()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -141,4 +142,20 @@ final class DetailView: BaseView {
         }
     }
     
+    func configureUI(result: Results) {
+        let downloadedApp = realmManager.fetchDownloadedApp()
+        let image = URL(string: result.artworkUrl100)
+        appLogoView.kf.setImage(with: image)
+        appTitleLabel.text = result.trackName
+        nameTitle.text = result.artistName
+        releaseLabel.text = result.releaseNotes
+        descriptionLabel.text = result.description
+        
+        for app in downloadedApp {
+            if app.trackId == result.trackId {
+                downloadButton.setTitle("열기", for: .normal)
+            }
+        }
+        
+    }
 }
