@@ -9,6 +9,13 @@ import Foundation
 import RxSwift
 import Differentiator
 
+enum NetworkError: Error {
+    case failedRequest
+    case noData
+    case invalidResponse
+    case invalidData
+    case invalidURL
+}
 
 
 final class NetworkManager {
@@ -17,7 +24,7 @@ final class NetworkManager {
     
     private init() {}
     
-    func callRequest(query: String) -> Observable<Content> {
+    func callRequest(query: String) -> Single<Content> {
         
 //        let url =  "https://itunes.apple.com/search?term=\(query)&media=software"
         //        let request = URL(string: url)!
@@ -35,31 +42,30 @@ final class NetworkManager {
         
         let request = URLRequest(url: component.url!)
         
-        let result = Observable<Content>.create { observer in
+        let result = Single<Content>.create { observer in
             
             URLSession.shared.dataTask(with: request) { data, response, error in
                 
-                guard error == nil else {
-                    print("에러임")
-                    return
+             
+                if let error = error {
+                    observer(.failure(NetworkError.failedRequest))
                 }
                 
                 guard let data = data else {
-                    print("데이터 이상해")
+                    observer(.failure(NetworkError.invalidData))
                     return
                 }
                 guard let response = response as? HTTPURLResponse else  {
-                    print("응답에러")
+                    observer(.failure(NetworkError.invalidResponse))
                     return
                 }
                 guard response.statusCode == 200 else {
-                    print("statuscode 200 X")
+                    observer(.failure(NetworkError.invalidResponse))
                     return
                 }
                 
                 if let content = try? JSONDecoder().decode(Content.self, from: data) {
-                    observer.onNext(content)
-                    observer.onCompleted()
+                    observer(.success(content))
                 }
             }.resume()
             

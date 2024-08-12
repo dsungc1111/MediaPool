@@ -23,6 +23,7 @@ final class DetailVC: BaseVC {
     let viewModel = DetailViewModel()
     
     private let disposeBag = DisposeBag()
+    private let realmManager = RealmManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,7 @@ final class DetailVC: BaseVC {
         
 
         let output = viewModel.initialSetting()
+        let downloadedApp = realmManager.fetchDownloadedApp()
         
         output.detailInfo
             .subscribe(with: self) { owner, result in
@@ -45,6 +47,14 @@ final class DetailVC: BaseVC {
                 owner.detailView.nameTitle.text = result.artistName
                 owner.detailView.releaseLabel.text = result.releaseNotes
                 owner.detailView.descriptionLabel.text = result.description
+                
+                for app in downloadedApp {
+                    if app.trackId == result.trackId {
+                        owner.detailView.downloadButton.setTitle("열기", for: .normal)
+                    }
+                }
+                
+                
             }
             .disposed(by: disposeBag)
         
@@ -52,6 +62,10 @@ final class DetailVC: BaseVC {
             .bind(to: detailView.collectionView.rx.items(cellIdentifier: DetailImageCollectionViewCell.identifier, cellType: DetailImageCollectionViewCell.self)) { (item, element, cell) in
                 let imageUrl = URL(string: element)
                 cell.imageView.kf.setImage(with: imageUrl)
+                
+                
+                
+                
             }
             .disposed(by: disposeBag)
         

@@ -48,7 +48,6 @@ final class SearchViewModel: BaseViewModel {
     func transform(input: Input) -> Output {
         
         if let savedSearch = UserDefaults.standard.array(forKey: UserDefaultKey.result.rawValue) as? [String] {
-            
             searchResultList = savedSearch
         }
         
@@ -58,7 +57,6 @@ final class SearchViewModel: BaseViewModel {
         
         input.trigger
             .subscribe(with: self) { owner, _ in
-                print("실행?")
                 searchList.onNext(owner.searchResultList)
             }
             .disposed(by: disposeBag)
@@ -88,12 +86,15 @@ final class SearchViewModel: BaseViewModel {
             }
             .disposed(by: disposeBag)
         
+        
+        
         let modelSelected = BehaviorSubject(value: "")
         
         input.modelSelected
             .subscribe(with: self) { owner, value in
                 
                 modelSelected.onNext(value)
+                
                 NetworkManager.shared.callRequest(query: value)
                     .subscribe(with: self) { owner, content in
                         searchResult.onNext(content.results)
@@ -121,48 +122,3 @@ final class SearchViewModel: BaseViewModel {
     }
     
 }
-
-//extension SearchViewModel {
-//    
-//    struct CellInput {
-//        let tap: ControlEvent<Void>
-//    }
-//    struct CellOutput {
-//        
-//    }
-//    
-//    
-//    
-//    func transformCell(input: CellInput) -> CellOutput {
-//        
-//        
-//        return CellOutput
-//    }
-//}
-
-/*
- 
- input.recordTap
-     .subscribe(with: self) { owner, value in
-         print("Df")
-         NetworkManager.shared.callRequest(query: value)
-             .subscribe(with: self) { owner, content in
-                 searchResult.onNext(content.results)
-             }
-             .disposed(by: owner.disposeBag)
-         
-         for i in 0..<owner.searchResultList.count {
-             if owner.searchResultList[i] == value {
-                 owner.searchResultList.remove(at: i)
-                 break
-             }
-         }
-         owner.searchResultList.insert(value, at: 0)
-         
-         UserDefaults.standard.setValue(owner.searchResultList, forKey: UserDefaultKey.result.rawValue)
-         
-         searchList.onNext(owner.searchResultList)
-     }
-     .disposed(by: disposeBag)
- 
- */
