@@ -10,13 +10,20 @@ import RxSwift
 import RxCocoa
 
 
+protocol BaseViewModel {
+    
+    associatedtype Input
+    associatedtype Output
+    
+    func transform(input: Input) -> Output
+}
 
-final class SearchViewModel {
+
+final class SearchViewModel: BaseViewModel {
     
     enum UserDefaultKey: String {
         case result
     }
-    
     
     private let disposeBag = DisposeBag()
     

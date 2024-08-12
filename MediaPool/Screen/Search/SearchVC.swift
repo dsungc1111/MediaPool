@@ -64,9 +64,7 @@ final class SearchVC: BaseVC {
         // MARK: - 검색기록
         output.searchList
             .bind(to: searchView.collectionView.rx.items(cellIdentifier: SearchCollectionViewCell.identifier, cellType: SearchCollectionViewCell.self)) { (row, element, cell) in
-                
                 cell.resultButton.setTitle(element, for: .normal)
-                
             }
             .disposed(by: disposeBag)
         

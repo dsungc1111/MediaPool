@@ -18,6 +18,7 @@ final class SearchCollectionViewCell: UICollectionViewCell {
         btn.titleLabel?.textAlignment = .center
         btn.backgroundColor = .systemGray5
         btn.setTitleColor(.systemBlue, for: .normal)
+        btn.titleLabel?.font = .systemFont(ofSize: 12)
         btn.layer.cornerRadius = 15
         btn.isEnabled = false
         return btn
@@ -34,6 +35,10 @@ final class SearchCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func prepareForReuse() {
+        resultButton.setTitle("받기", for: .normal)
+    }
+    
     func configureLayout() {
         contentView.addSubview(resultButton)
         
