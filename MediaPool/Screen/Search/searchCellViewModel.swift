@@ -28,11 +28,11 @@ final class searchCellViewModel {
         
         let text = PublishRelay<String>()
     
-    
         
         input.cellTap
             .withLatestFrom(input.cellElement)
-            .subscribe(with: self) { owner, result in
+            .bind(with: self) { owner, result in
+//                print("ㅇㄹㅇㄹㅇㄴㄹ인ㄹ")
                 print(result.trackName)
                 owner.realmManager.saveApp(element: result)
                 text.accept("열기")

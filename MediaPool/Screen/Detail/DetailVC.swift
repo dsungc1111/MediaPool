@@ -28,7 +28,6 @@ final class DetailVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = false
-        
     }
     
     

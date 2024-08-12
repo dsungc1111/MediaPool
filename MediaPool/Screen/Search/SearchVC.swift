@@ -28,8 +28,6 @@ final class SearchVC: BaseVC {
     
     private let disposeBag = DisposeBag()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,14 +38,13 @@ final class SearchVC: BaseVC {
         
         searchView.tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
         searchView.tableView.rowHeight = 320
-        
     }
-    
     
     override func bind() {
         
         let trigger = PublishSubject<Void>()
-        
+        let cellViewModel = searchCellViewModel()
+         
         let input = SearchViewModel.Input(
             searchClick:  searchView.searchController.searchBar.rx.searchButtonClicked,
             searchWord: searchView.searchController.searchBar.rx.text.orEmpty,
@@ -77,7 +74,7 @@ final class SearchVC: BaseVC {
                 
                 cell.configureCell(element: element)
                 
-                let cellViewModel = searchCellViewModel()
+                
                 
                 let cellInput = searchCellViewModel.Input(cellTap: cell.downloadButton.rx.tap, cellElement: Observable.just(element))
                 
@@ -87,7 +84,7 @@ final class SearchVC: BaseVC {
                     .bind(to: cell.downloadButton.rx.title())
                     .disposed(by: cell.disposeBag)
                 
-//                let a = cell.downloadButton.rx.tap
+//                cell.downloadButton.rx.tap
 //                    .subscribe(with: self) { owner, _ in
 //                        owner.realmManager.saveApp(element: element)
 //                        cell.downloadButton.setTitle("열기", for: .normal)
