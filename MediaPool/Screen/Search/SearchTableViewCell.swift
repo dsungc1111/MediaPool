@@ -60,21 +60,40 @@ final class SearchTableViewCell: UITableViewCell {
     
     var disposeBag = DisposeBag()
     
+    private let viewModel = SearchTableViewModel()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         configureLayout()
         configureStackView()
+        bind()
         selectionStyle = .none
     }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+        
     }
     
     override func prepareForReuse() {
         disposeBag = DisposeBag()
+        downloadButton.setTitle("받기", for: .normal)
+    }
+    
+    func bind() {
+        
+        let input = SearchTableViewModel.Input(downButtonTap: downloadButton.rx.tap)
+        
+        let output = viewModel.transform(input: input)
+        
+        output.text
+            .bind(with: self) { owner, value in
+                owner.downloadButton.setTitle(value, for: .normal)
+            }
+            .disposed(by: disposeBag)
+        
     }
     
     func configureLayout() {

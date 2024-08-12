@@ -16,6 +16,7 @@ final class DetailView: BaseView {
     let appLogoView = {
         let view = UIImageView()
         view.clipsToBounds = true
+        view.contentMode = .scaleAspectFit
         view.layer.cornerRadius = 10
         return view
     }()

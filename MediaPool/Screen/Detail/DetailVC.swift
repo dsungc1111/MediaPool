@@ -53,8 +53,6 @@ final class DetailVC: BaseVC {
                         owner.detailView.downloadButton.setTitle("열기", for: .normal)
                     }
                 }
-                
-                
             }
             .disposed(by: disposeBag)
         

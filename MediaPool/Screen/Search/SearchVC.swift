@@ -111,14 +111,20 @@ final class SearchVC: BaseVC {
                 cell.thirdPreview.kf.setImage(with: preview)
                 
                 
-                cell.downloadButton.rx.tap
-                    .subscribe(with: self) { owner, _ in
-                        owner.realmManager.saveApp(element: element)
-                        cell.downloadButton.setTitle("열기", for: .normal)
-                    }
-                    .disposed(by: cell.disposeBag)
+                
+                
+//                cell.downloadButton.rx.tap
+//                    .subscribe(with: self) { owner, _ in
+//                        owner.realmManager.saveApp(element: element)
+//                        cell.downloadButton.setTitle("열기", for: .normal)
+//                    }
+//                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
+        
+        
+        
+        
         
         // MARK: - 컨텐츠 클릭시 화면 전환
        
